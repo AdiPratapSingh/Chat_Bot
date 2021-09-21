@@ -10,7 +10,10 @@ user_agents = [
 
 ]
 
-def web_request(query):  # query is the input
+
+# Describing Scrapping functions to get imported in main
+# query is the input
+def web_request(query):  
 
     google_base_link = 'https://www.google.com/search?ei=LBEuYI-mEMyAyAPx26uICA&q={}&oq={}&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAELEDMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAOgoIABDqAhC0AhBDOgoILhDqAhC0AhBDOgQIABBDOgoIABCxAxCDARBDOggIABCxAxCDAToCCC46BwguEEMQkwI6BwgAELEDEEM6BAguEEM6BwgAEMkDEEM6BQgAEJIDOgUIABCRAjoECAAQA1DNcViwhAFggYYBaAFwAngAgAGXAogBnhKSAQYwLjEzLjKYAQCgAQGqAQdnd3Mtd2l6sAEKwAEB&sclient=gws-wiz&ved=0ahUKEwiP7Kbs7vLuAhVMAHIKHfHtCoEQ4dUDCA0&uact=5'
     header = {
@@ -26,4 +29,10 @@ def scrape_data(response):
     head_response = page_object.find_all('dev',{'class': 'xpdopen'})
 
     try:
-        side_response = page_object.find('div',{})
+        side_response = page_object.find('div',{'class': 'kno-rdesc'})
+        question_response = side_response.find_all('span')[0].text
+    
+    except AttributeError :
+        question_response = " "
+
+    return question_response
